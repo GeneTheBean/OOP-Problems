@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1457747941 source:/home/bean/Documents/C++_Projects/CISC_3150/T9_Spelling/main.cpp
+	<iostream>
+	<map>
+	<fstream>
+	<stdlib.h>
+

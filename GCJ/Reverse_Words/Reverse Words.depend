@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1457748243 source:/home/bean/Documents/C++_Projects/CISC_3150/Reverse Words/main.cpp
+	<iostream>
+	<fstream>
+	<sstream>
+	<stack>
+	<stdlib.h>
+

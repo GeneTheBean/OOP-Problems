@@ -1,0 +1,243 @@
+1.
+int zeroFrequency(list<int> l){
+    int numOfZeros = 0;
+    std::list<int>::const_iterator it = l.begin();
+
+    while(it != l.end()){
+        if(*it == 0) numOfZeros++;
+        ++it;
+    }
+    return numOfZeros;
+}
+
+2.
+list<int> largestSmallest(list<int> l){
+    list<int> result;
+    int largest;
+    int smallest;
+    std::list<int>::const_iterator it = l.begin();
+
+    while(it != l.end()){
+        if(it == l.begin()){
+            largest = smallest = *it;
+        }
+        else{
+            if(*it>largest) largest = *it;
+            else if(*it<smallest) smallest = *it;
+        }
+        ++it;
+    }
+    result.push_back(largest);
+    result.push_back(smallest);
+    return result;
+}
+
+3.
+void printPascal(int n){
+    int* arr1 = new int[1];
+    arr1[0] = 1;
+
+    for(int i = 0;i < n;i++){
+        int arr2[i+1];
+        int pos = 0;
+
+        for(int j = 0;j<i+1;j++){
+            if(j==0 || j==i){
+                arr2[j] = 1;
+                cout<<"1 ";
+            }
+            else{
+                arr2[j] = arr1[pos]+arr1[pos+1];
+                cout <<arr1[pos]+arr1[pos+1]<<" ";
+                pos++;
+            }
+        }
+
+        if(i>0){
+            arr1 = new int[i+1];
+            for(int k = 0;k<i+1;k++)
+                arr1[k] = arr2[k];
+        } cout<<endl;
+    }
+}
+
+4.
+#include <iostream>
+#include <stdlib.h>
+#include <time.h>
+#include <iomanip>
+using namespace std;
+bool checkSymmetry(int [][7], int);
+void print(int [][7], int);
+int main()
+{
+    srand (time(NULL));
+
+    int arr2[7][7];
+    for(int i = 0;i < 7;i++){
+        for(int j = 0;j<7;j++){
+            arr2[i][j] = rand() % 2;
+        }
+    }
+    print(arr2, 7);
+    if(checkSymmetry(arr2,7))
+        cout<<"This matrix is symmetrical.";
+    else cout<<"This matrix is not symmetrical.";
+
+    return 0;
+}
+
+bool checkSymmetry(int a[][7], int numCols){
+    for(int i = 0;i<numCols-1;i++){
+        for(int j = i+1; j<numCols; j++){
+            if(a[i][j] != a[j][i])
+                return false;
+        }
+    } return true;
+}
+
+void print(int a[][7], int numCols){
+    for(int i = 0;i < numCols;i++){
+        for(int j = 0;j<numCols;j++){
+            cout<<setw(2)<<a[i][j]<<" ";
+            if(j== numCols-1) cout <<endl;
+        }
+    }
+}
+
+5.
+
+#include <iostream>
+#include <stack>
+using namespace std;
+
+int main()
+{
+    string operators = "+-*/";
+    string output = "";
+    stack<char> opStack;
+
+    string input = "5*7+1+2/3*2";
+
+    for(int i = 0;i<input.length();i++){
+        if(isdigit(input[i]))
+            output += input[i];
+
+        else{
+            if(opStack.empty()){
+                opStack.push(input[i]);
+
+            }
+            else if(operators.find((input[i])/2 <= operators.find(opStack.top())/2)){
+                while(!opStack.empty() &&
+                ((operators.find(input[i])/2 <= operators.find(opStack.top())/2)))
+                    {
+                    output += opStack.top();
+                    opStack.pop();
+                }
+                opStack.push(input[i]);
+            }
+
+           else opStack.push(input[i]);
+        }
+    }
+
+    while(!opStack.empty()){
+        output += opStack.top();
+        opStack.pop();
+    }
+    for(int i = 0;i<output.length();i++){
+        cout<<output[i]<<" ";
+    }
+    return 0;
+}
+
+
+6.
+#include <iostream>
+#include <map>
+#include <string>
+using namespace std;
+
+void mostCommon(map<pair<string, string>, int>);
+map<pair<string,string>,int> pairFrequency(pair<string,string> [], int);
+string toLower(string &);
+int main()
+{
+    pair<string, string> pairArray[4];
+
+    pairArray[0] = make_pair("lol", "lol");
+    pairArray[1] = make_pair("kek", "kek");
+    pairArray[2] = make_pair("lol", "lol");
+    pairArray[3] = make_pair("meme", "kek");
+
+    mostCommon((pairFrequency(pairArray, 4)));
+
+    return 0;
+}
+
+map<pair<string,string>, int> pairFrequency(pair<string,string> a[], int size){
+     map<pair<string, string>, int> pairCount;
+     for(int i = 0;i<size;i++){
+        if(a[i].first == toLower(a[i].second))
+            pairCount[pair<string,string>(a[i].first, a[i].second)]++;
+     }
+     return pairCount;
+}
+
+void mostCommon(map<pair<string, string>, int> m){
+    map<pair<string, string>, int>::iterator it;
+    map<pair<string, string>, int>::iterator greatest;
+    for(it = m.begin(); it != m.end(); it++){
+        if(it == m.begin())
+            greatest = it;
+
+        else if(greatest->second < m[pair<string,string>(it->first.first, it->first.second)])
+            greatest = it;
+    }
+
+       cout<<greatest->first.first
+                <<", "
+                <<greatest->first.second
+                <<" : "
+                <<"is the most common string pair."
+                <<endl;
+}
+
+string toLower(string &s){
+    string result ="";
+    for(int i = 0;i<s.length();i++){
+        result += tolower(s[i]);
+    }
+    return result;
+}
+
+
+
+7.
+#include <cmath>
+#include <typeinfo>
+
+using namespace std;
+
+int main()
+{
+    bool valid = false;
+    long long int n = 192939495969798990;
+    long long square;
+    char candidate[19];
+        for(int i = sqrt(n);i>sqrt(100000000000000000);i-=10){
+        square = i*i;
+        sprintf(candidate,"%lld",square);
+
+        if((candidate[0]=='1') && (candidate[2] == '2')&& (candidate[4] == '3') && (candidate[6] == '4')
+            && (candidate[8] == '5') && (candidate[10] == '6') && (candidate[12] == '7') &&
+                (candidate[14] == '8') && (candidate[16] == '9') && (candidate[18] == '0')){
+            valid = true;
+            break;
+            }
+        }
+    if(valid) cout<<square*square;
+
+    return 0;
+}

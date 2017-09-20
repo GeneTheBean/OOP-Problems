@@ -1,0 +1,210 @@
+1(a) n
+1(b) m n
+1(c)
+	 bObj.demoFunc();	  
+	 dObj.baseCL::demoFunc();
+1(d)
+ 	dObj.demoFunc();
+
+2.
+baseCL constructor
+baseCL constructor
+derivedCL constructor
+derivedCL deconstructor
+baseCL deconstructor
+baseCL decontructor
+
+3.
+template <typename T>
+class Queue{
+    public:
+        Queue();                    //Construct queue.
+        ~Queue();                   //Deconstruct queue.
+        bool empty();               //Test whether container is empty.
+        int size();                 //Return size.
+        T front();                  //Access next element.
+        T back();                   //Acess last element.
+        void push(const T);         //Insert element.
+        void emplace(const T);      //Construct and insert element at end of queue.
+        void pop();                 //Remove next element.
+        void swap(Queue<T>&);       //Swaps elements from one qeueue with another.
+        void printQueue();          //Print all elements of queue.
+
+    protected:
+        Node<T>* head;
+        Node<T>* tail;
+        Node<T>* get_head();        //Return head node of queue
+        Node<T>* set_head(Node<T>*);//Set the head node of queue
+        void set_size(int);         //Set size of queue
+        int q_size;
+};
+
+template<typename T>
+Queue<T>::Queue(){
+    head = NULL;
+    tail = NULL;
+    q_size = 0;
+}
+
+template<typename T>
+Queue<T>::~Queue(){
+    delete head;
+    delete tail;
+}
+
+template <typename T>
+bool Queue<T>::empty(){
+    return q_size == 0;
+}
+
+template <typename T>
+int Queue<T>::size(){
+    return q_size;
+}
+
+template <typename T>
+T Queue<T>::front(){
+    if(!empty())
+        return head->nodeValue;
+}
+
+template <typename T>
+T Queue<T>::back(){
+   if(!empty())
+        return tail->nodeValue;
+}
+
+template <typename T>
+void Queue<T>::push(const T elem){
+    Node<T> *n = new Node<T>(elem);
+    n->next = NULL;
+
+    if(empty()){
+        head = n;
+        tail = head;
+    }
+
+    else{
+        Node<T>* temp;
+        temp = head;
+        while(temp->next != NULL){
+            temp = temp->next;
+        }
+
+        temp->next = n;
+    }
+    q_size++;
+}
+
+template <typename T>
+void Queue<T>::emplace(const T elem){
+    Node<T> *n = new Node<T>(elem);
+    n->next = NULL;
+
+    if(empty()){
+        head = n;
+        tail = head;
+    }
+
+    else{
+        Node<T>* temp1 = tail;
+        tail->next = n;
+        tail = n;
+    }
+    q_size++;
+}
+
+template <typename T>
+void Queue<T>::pop(){
+    if(empty()){
+         cout<<"No elements to pop; the list is empty."<<endl;
+         return;
+    }
+
+    else if(size() == 1){
+        head = NULL;
+        tail = NULL;
+    }
+
+    else{
+        Node<T>* temp = head;
+        head = head->next;
+        delete temp;
+    }
+    q_size--;
+}
+
+template <typename T>
+void Queue<T>::swap(Queue<T>& q){
+        Node<T>* temp;
+        temp = head;
+
+        head = q.get_head();
+        q.set_head(temp);
+
+        int s = size();
+        set_size(q.size());
+        q.set_size(s);
+}
+
+template <typename T>
+Node<T>* Queue<T>::get_head(){
+    if(!empty())
+        return head;
+}
+
+template <typename T>
+Node<T>* Queue<T>::set_head(Node<T>* n){ head = n;}
+
+template <typename T>
+void Queue<T>::set_size(int s){
+    q_size = s;
+}
+
+template <typename T>
+void Queue<T>::printQueue(){
+    if(empty()){
+        cout<<"The list is empty."<<endl;
+        return;
+    }
+
+    else{
+        Node<T>* n = head;
+        while(n!= NULL){
+            cout<<n->nodeValue<<" ";
+            n = n->next;
+        }
+        cout<<endl;
+    }
+}
+
+template<typename T>
+class DerivedQueue: public Queue<T>{
+    public:
+    void emergency_push(const T);     //Insert element.
+};
+
+template <typename T>
+void DerivedQueue<T>::emergency_push(const T elem){
+    Node<T> *n = new Node<T>(elem);
+    n->next = NULL;
+
+    if(this->empty()){
+        this->head = n;
+        this->tail = this->head;
+    }
+
+    else{
+        Node<T>* temp;
+        temp = this->head;
+        n->next = temp;
+        this->head = n;
+    }
+    this->q_size++;
+}
+
+4. 
+r->displayEmployeeInfo(); //Calls displayEmployeeInfo() from hourly employee class, which calls displayEmployeeInfo() from employee class
+q->displayEmployeeInfo(); //Calls displayEmployeeInfo() from salaried employee class, which calls displayEmployeeInfo() from employee class
+q->employee::displayEmployeeInfo(); //Calls displayEmployeeInfo() from employee class
+p->displayEmployeeInfo(); //Calls displayEmployeeInfo() from employee class

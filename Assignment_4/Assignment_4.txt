@@ -1,0 +1,112 @@
+1(a) n r
+1(b) m n
+1(c) 
+bObj.demoFunc(); //Calls demoFunc() from base class
+dObj.demoFunc(); //Calls demoFunc() from derived class
+
+2(a)
+public class Queue<T> {
+	//Construct queue.
+	public Queue(){	
+		head = tail = new Node<T>(null);
+		size = 0;
+	};	
+	
+	//Test whether container is empty.
+	public boolean empty(){	
+		return size == 0;
+	};             
+	
+	//Return size.
+	public int size(){	
+		return size;
+	};	
+	
+	//Access next element.
+	public T front(){
+		if(!empty())
+			return head.nodeValue;
+		else return null;
+	}
+	
+	//Access last element.
+	public T back(){
+		if(!empty())
+			return tail.nodeValue;
+		else return null;
+	}
+	
+	//Insert element.
+	public void push(final T item){
+		Node<T> n = new Node<T>(item);
+		if(empty()) 
+			head = tail = n;
+		
+		else if(size() == 1){
+			head.next = n;
+			tail = n;
+		}
+		
+		else{
+			Node<T> temp = tail;
+			tail = n;
+			temp.next = n;
+		}
+		size++;
+	};         
+	
+	//Remove next element.
+	public void pop(){
+		if(empty()){
+			System.out.println("No elements to pop.");
+			return;
+		}
+		
+		else if(size() == 1){
+			head = tail = new Node<T>(null);
+		}
+		
+		else head = head.next;
+		
+		size --;
+	};                
+	
+	//Print all elements of queue.
+	public void printQueue(){
+		if(empty()){
+			System.out.println("Queue is empty, no elements to print.");
+			return;
+		}
+		
+		Node<T> n = head;
+		while(n != null){
+			System.out.print(n.nodeValue + " ");
+			n = n.next;
+		}
+		System.out.println();
+	};         
+	
+	protected int size;
+	protected Node<T> head;
+	protected Node<T> tail;	
+}
+
+2(b)
+public class DerivedQueue<T> extends Queue<T>{
+	public void emergency_push(T item){
+		if(empty()) push(item);
+		
+		else {
+			Node<T> n = new Node<T>(item);
+			Node<T> temp = head;
+			head = n;
+			head.next = temp;
+		}
+		size++;
+	}
+}
+
+3
+r.displayEmployeeInfo(); //Calls displayEmployeeInfo() from HourlyEmployee class, which calls displayEmployeeInfo() from Employee class
+q.displayEmployeeInfo(); //Calls displayEmployeeInfo() from SalaryEmployee class, which calls displayEmployeeInfo() from Employee class
+p.displayEmployeeInfo(); //Calls displayEmployeeInfo() from SalaryEmployee class, which calls displayEmployeeInfo() from Employee class
